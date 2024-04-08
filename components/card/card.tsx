@@ -3,12 +3,12 @@ import Contact from "@/types/contact";
 import { useSelectedContact } from "@/context/selectedContactContext";
 import { useRouter } from "next/navigation";
 
-const Card: React.FC<Contact> = ({ id, name, phone }) => {
+const Card: React.FC<Contact> = ({ ID, name, phone }) => {
   const router = useRouter();
   const { setSelectedContactId } = useSelectedContact();
 
   const handleClick = () => {
-    setSelectedContactId(id);
+    setSelectedContactId(ID);
     router.push("/details");
   };
 
