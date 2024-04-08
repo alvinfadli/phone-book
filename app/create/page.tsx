@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { useState, ChangeEvent, FormEvent } from "react";
+import { toast } from "react-hot-toast";
 
 interface FormData {
   name: string;
@@ -40,6 +41,7 @@ export default function Create() {
       });
       const data = await response.json();
       if (data.status.code === 200) {
+        toast.success("Successfully added new contact!");
         router.push("/");
       }
     } catch (error) {

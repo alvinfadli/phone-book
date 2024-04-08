@@ -6,6 +6,7 @@ import { Mail, MapPin, Pencil, Phone, Trash2, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { parseTimestamp } from "@/utils/time_parser";
+import { toast } from "react-hot-toast";
 
 export default function ContactDetail() {
   const router = useRouter();
@@ -41,9 +42,10 @@ export default function ContactDetail() {
           method: "DELETE",
         }
       );
-      const jsonData = await response.json();
+      const data = await response.json();
 
-      if (jsonData.status.code === 200) {
+      if (data.status.code === 200) {
+        toast("Contact data deleted!", { icon: "🗑️" });
         router.replace("/");
       }
     } catch (error) {

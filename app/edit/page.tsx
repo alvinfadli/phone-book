@@ -2,6 +2,7 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { useSelectedContact } from "@/context/selectedContactContext";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 interface FormData {
   name: string;
@@ -66,6 +67,7 @@ export default function Edit() {
       );
       const data = await response.json();
       if (data.status.code === 200) {
+        toast("Contact data updated!", { icon: "👏" });
         router.push("/");
       }
     } catch (error) {
