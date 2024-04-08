@@ -1,20 +1,26 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 
 interface FormData {
   name: string;
   phone: string;
   email: string;
+  address: string;
 }
 
-export default function Create(): JSX.Element {
+export default function Create() {
+  const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     phone: "",
     email: "",
+    address: "",
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
     const { id, value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -33,7 +39,9 @@ export default function Create(): JSX.Element {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-      console.log("Response:", data);
+      if (data.status.code === 200) {
+        router.push("/");
+      }
     } catch (error) {
       console.error("Error:", error);
     }
@@ -69,7 +77,7 @@ export default function Create(): JSX.Element {
               Phone number
             </label>
             <input
-              type="number"
+              type="tel"
               id="phone"
               value={formData.phone}
               onChange={handleChange}
@@ -92,6 +100,22 @@ export default function Create(): JSX.Element {
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="your-mail@mail.com"
+              required
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="address"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Address
+            </label>
+            <textarea
+              id="address"
+              value={formData.address}
+              onChange={handleChange}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Enter your address"
               required
             />
           </div>

@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from "react";
 import Contact from "@/types/contact";
 import { useSelectedContact } from "@/context/selectedContactContext";
-import { Pencil, Trash2 } from "lucide-react";
+import { Mail, MapPin, Pencil, Phone, Trash2, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { parseTimestamp } from "@/utils/time_parser";
 
 export default function ContactDetail() {
   const router = useRouter();
@@ -58,28 +59,48 @@ export default function ContactDetail() {
   return (
     <div className="border border-slate-600 mb-1 rounded-md p-4">
       <div className="flex justify-between">
-        <div>
-          <h2 className="font-bold">{data?.name}</h2>
-          <h1>{data?.email}</h1>
+        <div className="">
+          <div className="flex items-center gap-1 mb-2">
+            <User size={16} />
+            <h2 className="font-bold">{data?.name}</h2>
+          </div>
+          <div className="flex items-center gap-1 mb-2">
+            <MapPin size={16} />
+            <h2 className="">{data?.address}</h2>
+          </div>
+          <div className="flex items-center gap-1 mb-2">
+            <Mail className="pt-0.5" size={16} />
+            <a href={`mailto:${data?.email}`} className="">
+              {data?.email}
+            </a>
+          </div>
         </div>
-        <p>{data?.phone}</p>
+        <div>
+          <div className="flex items-center gap-1 mb-2">
+            <Phone className="pt-0.5" size={16} />
+            <h2 className="">{data?.phone}</h2>
+          </div>
+        </div>
       </div>
-      <div className="flex justify-end gap-1">
-        <Link
-          href={"/edit"}
-          className="flex justify-center items-center p-1.5 rounded-md bg-yellow-700 hover:bg-yellow-800"
-        >
-          <Pencil color="white" size={24} />
-        </Link>
-        <button
-          className="flex justify-center items-center p-1.5 rounded-md bg-red-700 hover:bg-red-800"
-          onClick={deleteData}
-        >
-          <Trash2 color="white" size={24} />
-        </button>
+      <div className="flex justify-between gap-1 mt-5">
+        <div className="pt-5 text-slate-400 italic">
+          <p>Last updated : {parseTimestamp(data?.UpdatedAt)}</p>
+        </div>
+        <div className="flex gap-1">
+          <Link
+            href={"/edit"}
+            className="flex justify-center items-center p-2 rounded-md bg-yellow-700 hover:bg-yellow-800"
+          >
+            <Pencil color="white" size={22} />
+          </Link>
+          <button
+            className="flex justify-center items-center p-2 rounded-md bg-red-700 hover:bg-red-800"
+            onClick={deleteData}
+          >
+            <Trash2 color="white" size={22} />
+          </button>
+        </div>
       </div>
     </div>
   );
 }
-
-// export default ContactDetail;
