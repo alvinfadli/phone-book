@@ -32,13 +32,16 @@ export default function Create() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/api/v1/contacts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/contacts`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       const data = await response.json();
       if (data.status.code === 200) {
         toast.success("Successfully added new contact!");
@@ -84,7 +87,7 @@ export default function Create() {
               value={formData.phone}
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="628-XXXX-XXXX"
+              placeholder="628XX-XXXX-XXXX"
               required
             />
           </div>
@@ -122,7 +125,14 @@ export default function Create() {
             />
           </div>
         </div>
-        <div className="flex justify-end my-4">
+        <div className="flex justify-end my-4 gap-1.5">
+          <button
+            onClick={() => router.replace("/")}
+            type="button"
+            className="bg-white text-slate-500 border border-gray-300 px-3 py-2 rounded-md hover:bg-gray-100"
+          >
+            Cancel
+          </button>
           <button
             type="submit"
             className="bg-black text-white px-3 py-2 rounded-md"

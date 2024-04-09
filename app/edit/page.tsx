@@ -26,7 +26,7 @@ export default function Edit() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/api/v1/contacts/${selectedContactId}`
+          `${process.env.NEXT_PUBLIC_API_URL}/contacts/${selectedContactId}`
         );
         console.log(response);
 
@@ -56,7 +56,7 @@ export default function Edit() {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/contacts/${selectedContactId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/contacts/${selectedContactId}`,
         {
           method: "PUT",
           headers: {
@@ -148,10 +148,17 @@ export default function Edit() {
             />
           </div>
         </div>
-        <div className="flex justify-end my-4">
+        <div className="flex justify-end my-4 gap-1.5">
+          <button
+            onClick={() => router.replace("/details")}
+            type="button"
+            className="bg-white text-slate-500 border border-gray-300 px-3 py-2 rounded-md hover:bg-gray-100"
+          >
+            Cancel
+          </button>
           <button
             type="submit"
-            className="bg-black text-white px-3 py-2 rounded-md"
+            className="bg-black text-white px-3 py-2 rounded-md hover:bg-slate-800"
           >
             Update
           </button>
