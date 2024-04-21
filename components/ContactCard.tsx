@@ -7,7 +7,7 @@ interface ContactCardProps {
 
 const ContactCard = ({ contact }: ContactCardProps) => {
   return (
-    <Card>
+    <Card className="justify-between">
       <h1 className="font-medium">{contact.name}</h1>
       <p>{contact.phone}</p>
     </Card>
