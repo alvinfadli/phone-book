@@ -1,5 +1,7 @@
 
-# Phone Book
+# Phone Book 
+
+## This version still in dev, please download version 1.0.0 in releases section
 
 Phone Book Web Application
 
