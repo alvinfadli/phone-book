@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useFetchContact } from "@/hooks/useFetchContact";
+import { useFetchContact } from "@/hooks/hooks";
 import ContactFeed from "@/components/ContactFeed";
 import Button from "@/components/ui/Button";
 import { useRouter } from "next/navigation";
