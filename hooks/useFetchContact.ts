@@ -1,7 +1,8 @@
 import Contact from "@/types/contact";
 import { useEffect, useState } from "react";
 
-export const useContactPage = () => {
+// TODO use react query
+export const useFetchContact = () => {
   const [data, setData] = useState<Contact[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
