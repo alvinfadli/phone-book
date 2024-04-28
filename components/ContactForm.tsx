@@ -1,12 +1,14 @@
 "use client";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import Button from "./ui/Button";
+import Button from "./ui/Buttondelete";
 import { useRouter } from "next/navigation";
 
 import Contact from "@/types/contact";
-import { Input } from "./ui/Input";
+import { Input } from "./ui/input";
+import { PhoneInput } from "./ui/phone-input";
 
 const formSchema = z.object({
   name: z.string(),
@@ -22,11 +24,14 @@ type ContactFormProps = {
 };
 
 const ContactForm = ({ contact }: ContactFormProps) => {
+  const [phoneNumber, setPhoneNumber] = useState("");
+
   const router = useRouter();
   const {
     register,
     handleSubmit,
     setError,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     // set default value for editing
@@ -74,7 +79,19 @@ const ContactForm = ({ contact }: ContactFormProps) => {
     <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
       <Input {...register("name")} placeholder="Name" text="Name" />
       {errors.name && <div className="text-red-500">{errors.name.message}</div>}
-      <Input {...register("phone")} placeholder="Phone" text="Phone" />
+      {/* <Input {...register("phone")} placeholder="Phone" text="Phone" /> */}
+      <label className="block text-sm font-medium text-gray-900">Phone</label>
+      <PhoneInput
+        international={true}
+        defaultCountry="ID"
+        placeholder="Enter a phone number"
+        value={contact ? contact.phone : undefined}
+        onChange={(phone) => {
+          if (phone) {
+            setValue("phone", phone);
+          }
+        }}
+      />
       {errors.phone && (
         <div className="text-red-500">{errors.phone.message}</div>
       )}

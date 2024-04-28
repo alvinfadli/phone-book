@@ -9,7 +9,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, text, ...props }, ref) => {
     return (
       <>
-        <label className="block mb-0.5 text-sm font-medium text-gray-900">
+        <label className="block text-sm font-medium text-gray-900">
           {text}
         </label>
         <input

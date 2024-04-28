@@ -1,4 +1,4 @@
-import Card from "@/components/ui/Card";
+import Card from "@/components/ui/card";
 import { useSelectedContact } from "@/context/selectedContactContext";
 import Contact from "@/types/contact";
 import { useRouter } from "next/navigation";

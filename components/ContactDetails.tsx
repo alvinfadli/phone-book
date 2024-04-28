@@ -4,7 +4,7 @@ import Contact from "@/types/contact";
 import { Mail, MapPin, Pencil, Phone, Trash2, User } from "lucide-react";
 import Link from "next/link";
 import { parseTimestamp } from "@/utils/time_parser";
-import Dialog from "@/components/ui/Dialog";
+import Dialog from "@/components/ui/modal-dialog";
 import { useDeleteContact, useFetchContactByID } from "@/hooks/hooks";
 
 interface ContactDetailsProps {

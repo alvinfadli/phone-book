@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useFetchContact } from "@/hooks/hooks";
 import ContactFeed from "@/components/ContactFeed";
-import Button from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 /* Contact Page */
@@ -22,10 +22,13 @@ export default function Home() {
             <div></div>
             <div>
               <Button
-                variant="primary"
-                text="Add"
+                asChild
+                variant={"default"}
+                about="Add"
                 onClick={() => router.push("/create")}
-              />
+              >
+                <p>Add</p>
+              </Button>
             </div>
           </div>
           <ContactFeed contacts={data} />
