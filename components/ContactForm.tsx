@@ -1,9 +1,8 @@
 "use client";
-import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import Button from "./ui/Buttondelete";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 import Contact from "@/types/contact";
@@ -24,8 +23,6 @@ type ContactFormProps = {
 };
 
 const ContactForm = ({ contact }: ContactFormProps) => {
-  const [phoneNumber, setPhoneNumber] = useState("");
-
   const router = useRouter();
   const {
     register,
@@ -107,15 +104,13 @@ const ContactForm = ({ contact }: ContactFormProps) => {
         <Button
           onClick={() => router.replace("/")}
           type="button"
-          text="Cancel"
           variant="secondary"
-        />
-        <Button
-          disabled={isSubmitting}
-          type="submit"
-          text={isSubmitting ? "Loading..." : "Submit"}
-          variant="primary"
-        />
+        >
+          Cancel
+        </Button>
+        <Button disabled={isSubmitting} type="submit" variant="default">
+          {isSubmitting ? "Loading..." : "Submit"}
+        </Button>
       </div>
       {errors.root && <div className="text-red-500">{errors.root.message}</div>}
     </form>

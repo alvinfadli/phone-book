@@ -22,12 +22,11 @@ export default function Home() {
             <div></div>
             <div>
               <Button
-                asChild
                 variant={"default"}
                 about="Add"
                 onClick={() => router.push("/create")}
               >
-                <p>Add</p>
+                Add
               </Button>
             </div>
           </div>
