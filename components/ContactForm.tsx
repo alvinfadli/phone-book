@@ -6,11 +6,12 @@ import Button from "./ui/Button";
 import { useRouter } from "next/navigation";
 
 import Contact from "@/types/contact";
+import { Input } from "./ui/Input";
 
 const formSchema = z.object({
   name: z.string(),
-  phone: z.string().min(12),
-  email: z.string().email(),
+  phone: z.string(),
+  email: z.string(),
   address: z.string(),
 });
 
@@ -71,69 +72,17 @@ const ContactForm = ({ contact }: ContactFormProps) => {
 
   return (
     <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label
-          htmlFor="name"
-          className="block mb-2 text-sm font-medium text-gray-900"
-        >
-          Name
-        </label>
-        <input
-          {...register("name")}
-          type="text"
-          placeholder="Name"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        />
-      </div>
+      <Input {...register("name")} placeholder="Name" text="Name" />
       {errors.name && <div className="text-red-500">{errors.name.message}</div>}
-      <div>
-        <label
-          htmlFor="phone"
-          className="block mb-2 text-sm font-medium text-gray-900"
-        >
-          Phone number
-        </label>
-        <input
-          {...register("phone")}
-          type="number"
-          placeholder="Phone"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        />
-      </div>
+      <Input {...register("phone")} placeholder="Phone" text="Phone" />
       {errors.phone && (
         <div className="text-red-500">{errors.phone.message}</div>
       )}
-      <div>
-        <label
-          htmlFor="Email"
-          className="block mb-2 text-sm font-medium text-gray-900"
-        >
-          Email Address
-        </label>
-        <input
-          {...register("email")}
-          type="text"
-          placeholder="Email"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        />
-      </div>
+      <Input {...register("email")} placeholder="Email" text="Email" />
       {errors.email && (
         <div className="text-red-500">{errors.email.message}</div>
       )}
-      <div>
-        <label
-          htmlFor="Email"
-          className="block mb-2 text-sm font-medium text-gray-900"
-        >
-          Address
-        </label>
-        <input
-          {...register("address")}
-          type="text"
-          placeholder="Address"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        />
-      </div>
+      <Input {...register("address")} placeholder="Address" text="Address" />
       {errors.address && (
         <div className="text-red-500">{errors.address.message}</div>
       )}
