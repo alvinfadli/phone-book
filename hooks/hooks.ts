@@ -5,17 +5,26 @@ import { useRouter } from "next/navigation";
 
 // TODO use react query
 export const useFetchContact = () => {
-  const [data, setData] = useState<Contact[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search);
+  const [data, setData] = useState<Contact[]>([]);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    const loadContacts = async () => {
+      setLoading(true);
 
-  const fetchData = async () => {
+      await fetchData(debounceSearch);
+
+      setLoading(false);
+    };
+    loadContacts();
+  }, [debounceSearch]);
+
+  const fetchData = async (search: string) => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/contacts`
+        `${process.env.NEXT_PUBLIC_API_URL}/contacts?name=${search}`
       );
       const jsonData = await response.json();
       setData(jsonData.data);
@@ -27,7 +36,7 @@ export const useFetchContact = () => {
     }
   };
 
-  return { data };
+  return { data, loading, setLoading, setSearch };
 };
 
 export const useFetchContactByID = () => {
@@ -83,4 +92,18 @@ export const useDeleteContact = () => {
   };
 
   return { deleteData, loading };
+};
+
+export const useDebounce = <T>(value: T, delay = 500) => {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => clearTimeout(timeout);
+  }, [value, delay]);
+
+  return debouncedValue;
 };
