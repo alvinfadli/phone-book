@@ -12,7 +12,6 @@ interface ContactFeedProps {
 const ContactFeed = ({ loading, contacts }: ContactFeedProps) => {
   return (
     <div className="flex flex-col gap-2">
-      {loading && <div>Loading...</div>}
       {contacts.map((contact) => (
         <ContactCard key={contact.ID} contact={contact} />
       ))}

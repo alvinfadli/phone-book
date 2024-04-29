@@ -1,10 +1,11 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { useDebounce, useFetchContact } from "@/hooks/hooks";
+import React from "react";
+import { useFetchContact } from "@/hooks/hooks";
 import ContactFeed from "@/components/ContactFeed";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import SearchBar from "@/components/ui/searchbar";
+import { ContactCardSkeleton } from "@/components/ContactCardSkeleteon";
 
 /* Contact Page */
 
@@ -33,8 +34,11 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          {loading && <div>Loading...</div>}
-          {<ContactFeed loading={loading} contacts={data} />}
+          {loading ? (
+            <ContactCardSkeleton />
+          ) : (
+            <ContactFeed loading={loading} contacts={data} />
+          )}
         </div>
       </div>
     </main>
