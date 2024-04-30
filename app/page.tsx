@@ -34,11 +34,7 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          {loading ? (
-            <ContactCardSkeleton />
-          ) : (
-            <ContactFeed loading={loading} contacts={data} />
-          )}
+          {loading ? <ContactCardSkeleton /> : <ContactFeed contacts={data} />}
         </div>
       </div>
     </main>

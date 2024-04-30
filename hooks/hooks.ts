@@ -9,19 +9,18 @@ export const useFetchContact = () => {
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search);
   const [data, setData] = useState<Contact[]>([]);
-
   useEffect(() => {
     const loadContacts = async () => {
       setLoading(true);
 
-      await fetchData(debounceSearch);
+      fetchData(debounceSearch);
 
       setLoading(false);
     };
     loadContacts();
   }, [debounceSearch]);
 
-  const fetchData = async (search: string) => {
+  const fetchData = async (search: string = "") => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/contacts?name=${search}`
