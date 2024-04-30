@@ -53,7 +53,7 @@ export const useFetchContactByID = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/contacts/${selectedContactId}`
       );
       const jsonData = await response.json();
-      setData(jsonData.data);
+      setData(jsonData.data ?? null);
 
       setLoading(false);
     } catch (error) {
@@ -62,7 +62,7 @@ export const useFetchContactByID = () => {
     }
   };
 
-  return { data };
+  return { data, loading };
 };
 
 export const useDeleteContact = () => {
