@@ -1,12 +1,13 @@
 import Contact from "@/types/contact";
 import { useEffect, useState } from "react";
 import { useSelectedContact } from "@/context/selectedContactContext";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 // TODO use react query
 export const useFetchContact = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [search, setSearch] = useState("");
+  const searchParams = useSearchParams();
   const debounceSearch = useDebounce(search);
   const [data, setData] = useState<Contact[]>([]);
   useEffect(() => {
@@ -20,13 +21,16 @@ export const useFetchContact = () => {
     loadContacts();
   }, [debounceSearch]);
 
-  const fetchData = async (search: string = "") => {
+  const fetchData = async (search: string | null = "") => {
+    if (searchParams.get("name")) {
+      search = searchParams.get("name");
+    }
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/contacts?name=${search}`
       );
       const jsonData = await response.json();
-      setData(jsonData.data);
+      setData(jsonData.data.contacts);
 
       setLoading(false);
     } catch (error) {

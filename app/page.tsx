@@ -3,7 +3,7 @@ import React from "react";
 import { useFetchContact } from "@/hooks/hooks";
 import ContactFeed from "@/components/ContactFeed";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import SearchBar from "@/components/ui/searchbar";
 import { ContactCardSkeleton } from "@/components/ContactCardSkeleteon";
 
@@ -12,6 +12,22 @@ import { ContactCardSkeleton } from "@/components/ContactCardSkeleteon";
 export default function Home() {
   const router = useRouter();
   const { data, loading, setSearch } = useFetchContact();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  function handleSearch(term: string) {
+    const params = new URLSearchParams(searchParams);
+
+    if (term) {
+      params.set("name", term);
+      setSearch(term);
+    } else {
+      params.delete("name");
+      setSearch("");
+    }
+    replace(`${pathname}?${params.toString()}`);
+  }
 
   return (
     <main className="flex min-h-screen flex-col items-center">
@@ -22,7 +38,11 @@ export default function Home() {
         <div className="flex flex-col ">
           <div className="flex justify-between mb-2">
             <div>
-              <SearchBar onChange={setSearch} />
+              <SearchBar
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  handleSearch(e.target.value);
+                }}
+              />
             </div>
             <div>
               <Button
