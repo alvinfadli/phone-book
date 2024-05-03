@@ -39,7 +39,7 @@ export const useFetchContact = () => {
     }
   };
 
-  return { data, loading, setLoading, setSearch };
+  return { data, loading, setLoading, setSearch, search };
 };
 
 export const useFetchContactByID = () => {
