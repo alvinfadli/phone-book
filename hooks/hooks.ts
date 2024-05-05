@@ -7,39 +7,51 @@ import { useRouter, useSearchParams } from "next/navigation";
 export const useFetchContact = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [search, setSearch] = useState("");
-  const searchParams = useSearchParams();
   const debounceSearch = useDebounce(search);
   const [data, setData] = useState<Contact[]>([]);
+  // const [page, setPage] = useState(1);
+  // const [perPage, setPerPage] = useState(10);
+  const [pagination, setPagination] = useState({
+    lastPage: 0,
+    page: 1,
+    perPage: 10,
+    total: 0,
+  });
+
+  console.log(pagination.page);
+
   useEffect(() => {
-    const loadContacts = async () => {
-      setLoading(true);
+    setLoading(true);
+    fetchData();
+    setLoading(false);
+  }, []);
 
-      fetchData(debounceSearch);
-
-      setLoading(false);
-    };
-    loadContacts();
+  useEffect(() => {
+    setLoading(true);
+    fetchData(debounceSearch);
+    setLoading(false);
   }, [debounceSearch]);
 
   const fetchData = async (search: string | null = "") => {
-    if (searchParams.get("name")) {
-      search = searchParams.get("name");
-    }
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/contacts?name=${search}`
+        `${process.env.NEXT_PUBLIC_API_URL}/contacts?name=${search}&page=${pagination.page}&perPage=${pagination.perPage}`
       );
       const jsonData = await response.json();
       setData(jsonData.data.contacts);
-
+      setPagination(jsonData.data.pagination);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data: ", error);
       setLoading(false);
     }
   };
-
-  return { data, loading, setLoading, setSearch, search };
+  return {
+    data,
+    loading,
+    search,
+    setSearch,
+  };
 };
 
 export const useFetchContactByID = () => {
@@ -97,7 +109,7 @@ export const useDeleteContact = () => {
   return { deleteData, loading };
 };
 
-export const useDebounce = <T>(value: T, delay = 500) => {
+export const useDebounce = <T>(value: T, delay = 1000) => {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
